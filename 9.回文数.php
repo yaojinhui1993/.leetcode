@@ -69,7 +69,7 @@ class Solution
 {
 
     /**
-     * @param Integer $x
+     * @param int $x
      * @return Boolean
      */
     public function isPalindrome($x)
