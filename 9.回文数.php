@@ -97,8 +97,6 @@ class Solution
             }
 
 
-
-
             if ($a[$i] !== $a[$j]) {
                 return false;
             }
