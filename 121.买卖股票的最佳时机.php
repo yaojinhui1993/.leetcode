@@ -83,9 +83,9 @@ class Solution
     */
     public function maxProfit($prices)
     {
-        $this->prices = $prices;
+        $this->prices = $this->removeUnUsed($prices);
+        $this->total = count($this->prices);
 
-        $this->total = count($prices);
 
         // return $this->getMaxProfit($currentMin);
         $minAndDifference = $this->getMinAndDifference();
@@ -97,7 +97,7 @@ class Solution
 
         // [4,7,1,2]
 
-        var_dump($minAndDifference, $maxAndDifference);
+        // var_dump($minAndDifference, $maxAndDifference);
 
         if ($minAndDifference > $maxAndDifference) {
             return $minAndDifference;
@@ -107,6 +107,20 @@ class Solution
 
         // 否则，淘汰最小值，以第二小值取为最小值，取再向下寻找第比目前值大的值
         // return  ? : ;
+    }
+
+    public function removeUnUsed($prices)
+    {
+        $total = count($prices) - 1;
+        for ($i = 0; $i < $total; $i++) {
+            if ($prices[$i + 1] < $prices[$i]) {
+                unset($prices[$i]);
+            } else {
+                break;
+            }
+        }
+
+        return array_values($prices);
     }
 
     public function findMinAndDifferenceThan($compareMin)
