@@ -54,27 +54,113 @@
 class Solution
 {
 
+    // /**
+    //  * @param int[] $prices
+    //  * @return int
+    //  */
+    // public function maxProfit($prices)
+    // {
+    //     $max = 0;
+
+    //     $total = count($prices);
+
+    //     for ($i = 0; $i < $total; $i ++) {
+    //         for ($j = $i + 1; $j < $total; $j ++) {
+    //             $difference = $prices[$j] - $prices[$i];
+    //             if ($difference > $max) {
+    //                 $max = $difference;
+    //             }
+    //         }
+    //     }
+    //     // var_dump($pos);
+
+    //     return $max >= 0 ? $max : 0;
+    // }
+
     /**
-     * @param int[] $prices
-     * @return int
-     */
+    * @param int[] $prices
+    * @return int
+    */
     public function maxProfit($prices)
     {
-        $max = 0;
+        $this->prices = $prices;
+        $this->total = count($prices);
 
-        $total = count($prices);
+        $currentMin = -1;
 
-        for ($i = 0; $i < $total; $i ++) {
-            for ($j = $i + 1; $j < $total; $j ++) {
-                $difference = $prices[$j] - $prices[$i];
-                if ($difference > $max) {
-                    $max = $difference;
+        return $this->getMaxProfit($currentMin);
+
+        // 否则，讨淘最小值，以第二小值取为最小值，取再向下寻找第比目前值大的值
+    }
+
+    public function findMinAndDifferenceThan($compareMin)
+    {
+        $min = $this->prices[0];
+        $minPos = 0;
+
+        // 找出最小值
+        for ($i = 1; $i < $this->total; $i ++) {
+            // 值比 compareMin 来的大，并且 min 来的小
+            if ($this->prices[$i] < $min) {
+                //
+                if ($this->prices[$i] > $compareMin) {
+                    $min = $this->prices[$i];
+                    $minPos = $i;
+                } else {
+                    continue;
                 }
             }
         }
-        // var_dump($pos);
 
-        return $max >= 0 ? $max : 0;
+        // // 没有找到第二小的数据, 说明差别为 0
+        // if ($minPos === -1) {
+        //     return [0, 0];
+        // }
+
+        // 找出最小值后面的第二小的情况
+        $max = $this->prices[$minPos];
+        // $maxPos = -1; // 如果找不到，两者的差值为 0
+        for ($i = $minPos; $i < $this->total; $i ++) {
+            if ($this->prices[$i] > $max) {
+                $max = $this->prices[$i];
+                // $maxPos = $i;
+            }
+        }
+
+        // 没有找到第二小后面的数据
+        // if ($maxPos === -1) {
+        //     // todo
+        // }
+
+        // var_dump($min, $compareMin);
+
+        return [$min, $max - $min]; // 最小值，两者的差值,
+    }
+
+    public function getMaxProfit($currentMin)
+    {
+        // 找出最小值，以及最小值后面的最大值
+        $currentMinData = $this->findMinAndDifferenceThan($currentMin);
+        while (true) {
+
+            // 找出第二小值, 以及第二小值后面的最大值
+            $secondMinData = $this->findMinAndDifferenceThan($currentMinData[0]);
+
+            // [2,1,2,1,0,1,2]
+            // [3,2,6,5,0,3]
+            // [4,7,1,2]
+
+
+
+            var_dump($currentMinData, $secondMinData);
+
+            // 两者对比下，最小值的已经是最大的了，就输出，
+            if ($currentMinData[1] >= $secondMinData[1]) {
+                return $currentMinData[1]; // currentMinData 就已经是最大值了
+            } else {
+                $currentMinData = $secondMinData;
+            }
+        }
     }
 }
 // @lc code=end
