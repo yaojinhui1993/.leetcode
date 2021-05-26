@@ -44,27 +44,27 @@ class Solution
     public function singleNumber($nums)
     {
         //
-        $total = count($nums);
-        for ($i = 0; $i < $total; $i++) {
-            for ($j = $i + 1; $j < $total; $j++) {
-                // if ($j === count($nums)) {
-                //     // var_dump($j, count($nums), $nums, 'abc', $i);
-                //     return $nums[$i];
-                // }
+        // $total = count($nums);
+        // for ($i = 0; $i < $total; $i++) {
+        //     for ($j = $i + 1; $j < $total; $j++) {
+        //         // if ($j === count($nums)) {
+        //         //     // var_dump($j, count($nums), $nums, 'abc', $i);
+        //         //     return $nums[$i];
+        //         // }
 
-                if ($nums[$i] === $nums[$j]) {
-                    unset($nums[$i]);
-                    unset($nums[$j]);
-                    // $i = 0;
-                    // $j = $i + 1;
-                    // $nums = array_values($nums);
-                    // var_dump($nums);
-                    break;
-                }
-            }
+        //         if ($nums[$i] === $nums[$j]) {
+        //             unset($nums[$i]);
+        //             unset($nums[$j]);
+        //             // $i = 0;
+        //             // $j = $i + 1;
+        //             // $nums = array_values($nums);
+        //             // var_dump($nums);
+        //             break;
+        //         }
+        //     }
 
-            // return $nums[$i];
-        }
+        //     // return $nums[$i];
+        // }
         // [-336,513,-560,-481,-174,101,-997,40,-527,-784,-283,-336,513,-560,-481,-174,101,-997,40,-527,-784,-283,354]
 
         while (count($nums) !== 1) {
@@ -75,19 +75,25 @@ class Solution
                 if ($nums[$i] === $nums[$j]) {
                     unset($nums[$i]);
                     unset($nums[$j]);
+                    $nums = array_values($nums);
                     $i = 0;
                     $j = $i + 1;
                     break;
+                } else {
+                    $j++;
                 }
             }
 
             if ($j === $count) {
-                return $nums[$j];
+                // var_dump('here', $j, $nums);
+                return $nums[$i];
             }
+
+            $i++;
         }
 
-
         // var_dump($nums);
+
         return array_values($nums)[0];
     }
 }
