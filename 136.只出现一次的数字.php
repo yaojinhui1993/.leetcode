@@ -67,8 +67,27 @@ class Solution
         }
         // [-336,513,-560,-481,-174,101,-997,40,-527,-784,-283,-336,513,-560,-481,-174,101,-997,40,-527,-784,-283,354]
 
+        while (count($nums) !== 1) {
+            $i = 0;
+            $j = $i + 1;
+            $count = count($nums);
+            while ($j < $count) {
+                if ($nums[$i] === $nums[$j]) {
+                    unset($nums[$i]);
+                    unset($nums[$j]);
+                    $i = 0;
+                    $j = $i + 1;
+                    break;
+                }
+            }
 
-        var_dump($nums);
+            if ($j === $count) {
+                return $nums[$j];
+            }
+        }
+
+
+        // var_dump($nums);
         return array_values($nums)[0];
     }
 }
