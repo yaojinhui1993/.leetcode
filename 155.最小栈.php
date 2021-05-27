@@ -59,7 +59,7 @@
 class MinStack
 {
     protected $val;
-    protected $count;
+    // protected $count;
 
     /**
      * initialize your data structure here.
@@ -67,7 +67,7 @@ class MinStack
     public function __construct()
     {
         $this->val = [];
-        $this->count = -1;
+        // $this->count = -1;
     }
     /*
      ["MinStack","push","push","push","top","pop","getMin","pop","getMin","pop","push","top","getMin","push","top","getMin","pop","getMin"]\n
@@ -75,8 +75,13 @@ class MinStack
     */
     // my
     // [null,null,null,null,2147483647,null,2147483646,null,2147483646,null,null,,2147483647,null,,-2147483648,null,-2147483648]
+    // my2
+    // [null,null,null,null,2147483647,null,2147483646,null,2147483646,null,null,2147483647,2147483646,null,-2147483648,-2147483648,null,2147483646]
+
     // Expected Answer
     // [null,null,null,null,2147483647,null,2147483646,null,2147483646,null,null,2147483647,2147483647,null,-2147483648,-2147483648,null,2147483647]
+    // [null,null,null,null,2147483647,null,2147483646,null,2147483646,null,null,2147483647,2147483647,null,-2147483648,-2147483648,null,2147483647]
+
 
     /**
      * @param Integer $val
@@ -85,7 +90,7 @@ class MinStack
     public function push($val)
     {
         $this->val[] = $val;
-        $this->count++;
+        // $this->count++;
         // var_dump($this->val);
         // return array_push($this->$val, $val);
     }
@@ -100,12 +105,14 @@ class MinStack
         // var_dump($this->val);
 
         // var_dump($this->val);
-        unset($this->val[$this->count]);
+        // unset($this->val[$this->count]);
+        array_pop($this->val);
+        // var_dump($this->val);
 
         // $this->val = array_values($this->val);
         // var_dump($this->val);
 
-        $this->count--;
+        // $this->count--;
     }
 
     /**
@@ -113,8 +120,15 @@ class MinStack
      */
     public function top()
     {
-        var_dump($this->val);
-        return $this->val[$this->count];
+        // var_dump($this->val);
+        // return $this->val[$this->count];
+
+        // return $this->val[max(array_keys($this->val))];
+        $item = array_pop($this->val);
+        // return top($this->val);
+        $this->val[] = $item; // 再还回去
+
+        return $item;
     }
 
     /**
