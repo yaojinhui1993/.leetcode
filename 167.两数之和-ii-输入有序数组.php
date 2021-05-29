@@ -70,13 +70,44 @@ class Solution
     {
         $count = count($numbers);
 
-        for ($i = 0; $i < $count; $i++) {
-            for ($j = $i + 1; $j < $count; $j++) {
-                if (($numbers[$i] + $numbers[$j]) === $target) {
-                    return [$i + 1, $j + 1];
+        // for ($i = 0; $i < $count; $i++) {
+        //     for ($j = $i + 1; $j < $count; $j++) {
+        //         if (($numbers[$i] + $numbers[$j]) === $target) {
+        //             return [$i + 1, $j + 1];
+        //         }
+        //     }
+        // }
+
+        // 过滤重复的数据
+        $lastItem = $numbers[0];
+        for ($i = 1; $i < $count; $i++) {
+            if ($numbers[$i] === $lastItem) {
+                unset($numbers[$i]);
+                continue;
+            }
+
+            $lastItem = $numbers[$i];
+        }
+
+        foreach ($numbers as $key1 => $value1) {
+            foreach ($numbers as $key2 => $value2) {
+                if ($key1 === $key2) {
+                    continue;
+                }
+
+                if (($value1 + $value2) === $target) {
+                    return [$key1 + 1, $key2 + 1];
                 }
             }
         }
+
+        // for ($i = 0; $i < $count; $i++) {
+        //     for ($j = $i + 1; $j < $count; $j++) {
+        //         if (($numbers[$i] + $numbers[$j]) === $target) {
+        //             return [$i + 1, $j + 1];
+        //         }
+        //     }
+        // }
     }
 }
 // @lc code=end
