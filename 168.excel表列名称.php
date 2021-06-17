@@ -61,15 +61,43 @@ class Solution
         $str = '';
 
         // 2147483647
-        while ((int)($columnNumber / 26)) {
-            if ($columnNumber / 26) {
-                $str = chr($columnNumber % 26 + 64) . $str;
+        // while ((int)($columnNumber / 26)) {
+        //     if ($columnNumber / 26) {
+        //         $str = chr($columnNumber % 26 + 64) . $str;
+        //     } else {
+        //         $columnNumber = (int)($columnNumber / 26);
+        //     }
+        // }
+
+        // $str = chr($columnNumber + 64) . $str;
+
+        $data = [];
+
+        if ($columnNumber % 26 === 0) {
+            // 专门处理余数为 0 的情况。 还是很难的！
+            if ($columnNumber > 0) {
+                return $this->convertToTitle(($columnNumber / 26) - 1) . 'Z';
             } else {
-                $columnNumber = (int)($columnNumber / 26);
+                return '';
             }
+        } else {
+            while ($columnNumber > 26) {
+                $data[] = $columnNumber % 26;
+
+                // var_dump($columnNumber .' ' . (int)floor($columnNumber / 26));
+                $columnNumber = (int)floor($columnNumber / 26);
+            }
+
+            $data[] = $columnNumber;
         }
 
-        $str = chr($columnNumber + 64) . $str;
+
+        // var_dump($data);
+
+        $str = '';
+        for ($i = count($data) - 1; $i >= 0; $i--) {
+            $str .= chr($data[$i] + 64);
+        }
 
         return $str;
     }
