@@ -85,21 +85,13 @@ class Solution
      */
     public function reverseBits($n)
     {
-        // time limit
-        $stringN = decbin($n);
+        $result = 0;
 
-        $reverseN = '';
-
-        for ($i = strlen($stringN) - 1; $i >= 0; $i --) {
-            //     var_dump($i);
-            // var_dump($reverseN);
-            $reverseN .= $stringN[$i];
-            // $reverseN .= substr($stringN, $i, 1);
+        for ($i = 0; $i < 32; ++$i) {
+            $result = ($result  << 1)  + ($n >> $i & 1);
         }
 
-        var_dump($reverseN);
-
-        return $reverseN;
+        return $result;
     }
 }
 // @lc code=end
